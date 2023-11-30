@@ -12,8 +12,8 @@ const resolvers = {
     },
 
     Mutation: {
-        addUser: async (parent, { name, email, password }) => {
-            const user = await User.create({ name, email, password })
+        addUser: async (parent, { username, email, password }) => {
+            const user = await User.create({ username, email, password })
             const token = signToken(user)
 
             return { token, user }
@@ -36,15 +36,21 @@ const resolvers = {
         },
         saveBook: async (parent, { user, body }, context) => {
             if (context.user) {
-                return User.findOneAndUpdate(
+                const updatedUser = await User.findOneAndUpdate(
                     { _id: user },
                     { $addToSet: { savedBooks: body } },
                     { new: true, runValidators: true }
                 );
+
+                if (!updatedUser) {
+                    throw new Error('User not found');
+                }
+        
+                return updatedUser;
             }
             throw AuthenticationError
         },
-        deleteBook: async (parent, { user, params }, context) => {
+        removeBook: async (parent, { user, params }, context) => {
             if (context.user) {
                 return User.findOneAndUpdate(
                     { _id: user },
