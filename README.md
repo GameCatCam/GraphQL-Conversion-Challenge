@@ -16,7 +16,7 @@ Given a MERN build search engine, I was asked to refactor it to utilize a GraphQ
 
 This site's intended use is to look up books and add them to a personal storage after logging in. Additionally, this is a showcase for how to implement an Apollo Server into an application.
 
-[Here]() is the deployed website for your convenience.
+[Here](https://obscure-anchorage-38681-4b6af43cb591.herokuapp.com) is the deployed website for your convenience.
 
 ## License
 
@@ -34,4 +34,4 @@ Q: What is your email? A: My email is cameronrawlins11@gmail.com.
 
 ## Screenshot
 
-<img src='./screenshot.png'>
+<img src='./assets/screenshot.png'>
