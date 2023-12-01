@@ -15,6 +15,7 @@ Given a MERN build search engine, I was asked to refactor it to utilize a GraphQ
 ## Usage
 
 This site's intended use is to look up books and add them to a personal storage after logging in. Additionally, this is a showcase for how to implement an Apollo Server into an application.
+If you want to use the application at it's deployed link, just make sure to create an account on the login/signup page. Once you make an account, you can search up books on the main page. Each card with a book's info on it has a button to add it to your list. When you add it, you can see all the books you have added on your See Your Books page.
 
 [Here](https://obscure-anchorage-38681-4b6af43cb591.herokuapp.com) is the deployed website for your convenience.
 
