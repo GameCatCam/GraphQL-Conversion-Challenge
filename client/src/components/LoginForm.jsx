@@ -32,11 +32,18 @@ const LoginForm = () => {
         variables: { ...userFormData },
       });
 
-      const { token, user } = data.loginUser
-      console.log(user);
-      Auth.login(token);
+      console.log(data)
+
+      if (data && data.login.user) {
+        const { token, user } = data.login;
+        console.log(user);
+        Auth.login(token);
+      } else {
+        console.error("Error in try:", data);
+        setShowAlert(true);
+      }
     } catch (err) {
-      console.error(err);
+      console.error("Error in catch:", err);
       setShowAlert(true);
     }
 

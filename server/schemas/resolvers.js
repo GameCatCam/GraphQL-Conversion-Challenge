@@ -50,11 +50,11 @@ const resolvers = {
             }
             throw AuthenticationError
         },
-        removeBook: async (parent, { user, params }, context) => {
+        removeBook: async (parent, { user, bookId }, context) => {
             if (context.user) {
                 return User.findOneAndUpdate(
                     { _id: user },
-                    { $pull: { savedBooks: { bookId: params.bookId } } },
+                    { $pull: { savedBooks: { bookId: bookId } } },
                     { new: true }
                 )
             }

@@ -16,22 +16,27 @@ import { removeBookId } from '../utils/localStorage';
 const SavedBooks = () => {
   // useQuery that save GET_ME info to userData variable, if there is none it returns an empty object
   const { loading, error, data } = useQuery(GET_ME);
-  const userData = data?.getMe || {};
+  const userData = data?.me || { savedBooks: [] };
 
   const [removeBookMutation] = useMutation(REMOVE_BOOK);
 
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
   const handleDeleteBook = async (bookId) => {
-    const token = Auth.loggedIn() ? Auth.getToken() : null;
+    const token = Auth.loggedIn() ? Auth.getProfile() : null;
 
     if (!token) {
       return false;
     }
+    
+    const coolerBookId = bookId
 
     try {
       // calls the remove mutation using the variable of bookId, then requeries GET_ME
       await removeBookMutation({
-        variables: { bookId },
+        variables: { 
+          user: token.data._id,
+          bookId: coolerBookId
+        },
         refetchQueries: [{ query: GET_ME }],
       });
 
@@ -56,7 +61,7 @@ const SavedBooks = () => {
 
   return (
     <>
-      <div fluid className="text-light bg-dark p-5">
+      <div className="text-light bg-dark p-5">
         <Container>
           <h1>Viewing saved books!</h1>
         </Container>
@@ -68,10 +73,10 @@ const SavedBooks = () => {
             : 'You have no saved books!'}
         </h2>
         <Row>
-          {userData.savedBooks.map((book) => {
+          {userData.savedBooks?.map((book) => {
             return (
-              <Col md="4">
-                <Card key={book.bookId} border='dark'>
+              <Col key={book.bookId} md="4">
+                <Card border='dark'>
                   {book.image ? <Card.Img src={book.image} alt={`The cover for ${book.title}`} variant='top' /> : null}
                   <Card.Body>
                     <Card.Title>{book.title}</Card.Title>

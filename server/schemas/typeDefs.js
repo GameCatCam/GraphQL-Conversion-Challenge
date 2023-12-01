@@ -41,3 +41,5 @@ const typeDefs = `
         removeBook(user: ID!, bookId: ID!): User
     }
 `
+
+module.exports = typeDefs;
